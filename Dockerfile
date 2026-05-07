@@ -1,0 +1,1 @@
+FROM munique/openmu:latest
