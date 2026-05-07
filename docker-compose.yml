@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mu-server:
+    image: munique/openmu:latest
+    container_name: mu-server
+    restart: always
+    environment:
+      # Credenciales de la Base de Datos (Vincular con tu Postgres de Easypanel)
+      - DB_HOST=${DB_HOST}
+      - DB_ADMIN_USER=${DB_USER}
+      - DB_ADMIN_PW=${DB_PASSWORD}
+      - DB_DATABASE=${DB_NAME}
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      # Connect Server
+      - "44405:44405"
+      # Game Server (Main)
+      - "55901:55901"
+      # Admin Panel & API
+      - "1234:1234"
+      # Chat Server
+      - "55980:55980"
+    volumes:
+      - ./configs:/app/configs
+      - ./data:/app/data
+    networks:
+      - mu-network
+
+networks:
+  mu-network:
+    driver: bridge
